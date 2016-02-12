@@ -11,6 +11,6 @@ import 'angular2/core';
 import 'rxjs';
 
 // Third-party libraries
-import "immutable";
-import "redux";
-import "lodash";
+import 'immutable';
+import 'redux';
+import 'lodash';

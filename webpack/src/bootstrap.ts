@@ -3,8 +3,9 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {ROUTER_PROVIDERS} from 'angular2/router';
 
 import {App} from './app/app';
-import {Store} from "./app/store/Store";
-import {RootActionCreator} from "./app/store/actions/root.actions";
+import {Store} from './app/store/Store';
+import {RootActionCreator} from './app/store/actions/root.actions';
+import {NotitieService} from './app/services/NotitieService';
 
 // include for production builds
 // import {enableProdMode} from 'angular2/core';
@@ -13,5 +14,7 @@ import {RootActionCreator} from "./app/store/actions/root.actions";
 document.addEventListener('DOMContentLoaded', main);
 
 function main() {
-    return bootstrap(App, [HTTP_PROVIDERS, ROUTER_PROVIDERS, Store, RootActionCreator]).catch(err => console.error(err));
+    return bootstrap(App,
+        [HTTP_PROVIDERS, ROUTER_PROVIDERS, Store, RootActionCreator, NotitieService])
+        .catch(err => console.error(err));
 }

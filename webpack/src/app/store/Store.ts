@@ -1,7 +1,7 @@
 import {Injectable} from 'angular2/core';
-import {Map} from "immutable";
+import {Map} from 'immutable';
 import {applyMiddleware, createStore} from 'redux';
-import {ReduxStore} from "./ReduxStore";
+import {ReduxStore} from './ReduxStore';
 import {Reducer} from './Reducer';
 
 const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
