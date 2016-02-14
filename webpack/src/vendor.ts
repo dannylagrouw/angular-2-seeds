@@ -1,4 +1,5 @@
 ///<reference path='../node_modules/immutable/dist/immutable.d.ts'/>
+///<reference path='../typings/uuid.d.ts'/>
 
 // Polyfills
 import 'angular2/bundles/angular2-polyfills.js';
@@ -14,3 +15,4 @@ import 'rxjs';
 import 'immutable';
 import 'redux';
 import 'lodash';
+import 'uuid';

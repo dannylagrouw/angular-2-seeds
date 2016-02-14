@@ -1,34 +1,51 @@
 import {Injectable} from 'angular2/core';
 import {Notitie} from '../../services/NotitieService';
 
+export const enum RootActionType {
+    GET_NOTES,
+    GET_NOTE,
+    CREATE_NOTE,
+    UPDATE_NOTE,
+    DELETE_NOTE
+}
+
 @Injectable()
 export class RootActionCreator {
     constructor() {}
 
-    addNotitie(notitieText: string) {
+    getNotes() {
         return {
-            type: 'addNotitie',
-            text: notitieText
+            type: RootActionType.GET_NOTES
         };
     }
 
-    selectNotitie(notitie: Notitie) {
+    getNote(id: string) {
         return {
-            type: 'selectNotitie',
-            notitie: notitie
+            type: RootActionType.GET_NOTE,
+            id: id
         };
     }
 
-    deleteNotitie(notitie: Notitie) {
+    createNote(text: string) {
         return {
-            type: 'deleteNotitie',
-            notitie: notitie
+            type: RootActionType.CREATE_NOTE,
+            text: text
         };
     }
 
-    newNotitie() {
+    updateNote(id: string, text: string) {
         return {
-            type: 'newNotitie'
+            type: RootActionType.UPDATE_NOTE,
+            id: id,
+            text: text
         };
     }
+
+    deleteNote(id: string) {
+        return {
+            type: RootActionType.DELETE_NOTE,
+            id: id
+        };
+    }
+
 }

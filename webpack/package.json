@@ -19,6 +19,7 @@
     "es6-shim": "^0.33.3",
     "immutable": "^3.7.6",
     "lodash": "^4.0.0",
+    "node-uuid": "^1.4.7",
     "normalize-scss": "^4.0.3",
     "redux": "^3.0.5",
     "reflect-metadata": "0.1.2",

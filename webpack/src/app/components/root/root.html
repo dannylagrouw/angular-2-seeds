@@ -1,20 +1,5 @@
-<div style="padding:8px;min-height:30px;background-color:lightblue">
-    De state: {{state|json}}
-</div>
-<div style="padding:4px">
-    <table>
-        <tr>
-            <td>
-                <table>
-                    <notitie-lijst [notities]="state.notities"></notitie-lijst>
-                </table>
-            </td>
-            <td valign="top">
-                <notitie-editor [notities]="state.notities" [notitie]="state.editing"></notitie-editor>
-            </td>
-        </tr>
-    </table>
-</div>
-<div style="padding:8px;height:30px;background-color:lightgoldenrodyellow">
-    <button (click)="addNotitie('Toegevoegd vanuit root')">Toevoegen vanuit root component</button>
+<div>
+    Welcome to the Trivento Angular 2 seed project.
+    <br/>
+    <a [routerLink]="['Notes']">Notes Example</a>
 </div>
