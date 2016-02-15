@@ -1,0 +1,24 @@
+{
+    data: [
+        {
+            id: '1',
+            tekst: 'Note 1'
+        },
+        {
+            id: '2',
+            tekst: 'Note 2'
+        },
+        {
+            id: '3',
+            tekst: 'Note 3'
+        },
+        {
+            id: '4',
+            tekst: 'Note 4'
+        },
+        {
+            id: '5',
+            tekst: 'Note 5'
+        }
+    ]
+}
