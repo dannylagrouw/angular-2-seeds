@@ -6,6 +6,7 @@ export const enum RootActionType {
     START_LOADING,
     FINISH_LOADING,
     GET_NOTES,
+    SET_NOTES,
     GET_NOTE,
     CREATE_NOTE,
     UPDATE_NOTE,
@@ -29,27 +30,36 @@ export class RootActionCreator {
         };
     }
 
-    getNotes() {
+    getNotesA() {
         return {
             type: RootActionType.GET_NOTES
         };
     }
 
-    getNotesA() {
+    getNotes() {
         return dispatch => {
             console.log('getNotesA start');
             dispatch(this.startSlowOperation());
 
-            return this.http.get('js/notesdata.json')
-                //.map(res => JSON.parse(res))
-                .subscribe(data => {
-                    dispatch(this.finishSlowOperation());
-                    console.log('getNotesA', data);
-                    //if (data.status !== 'OK') {
-                    //} else {
-                        //dispatch(this.updateHoofdscherm(data.resultaat));
-                    //}
+            return this.http.get('notesdata.json')
+                .subscribe(response => {
+                    setTimeout(() => {
+                        dispatch(this.finishSlowOperation());
+                        if (response.ok) {
+                            console.log('getNotesA ok', response.json());
+                            dispatch(this.setNotes(response.json()['notes']));
+                        } else {
+                            console.log('getNotesA not ok', response);
+                        }
+                    }, 3000);
                 });
+        };
+    }
+
+    setNotes(notes: Notitie[]) {
+        return {
+            type: RootActionType.SET_NOTES,
+            notes: notes
         };
     }
 

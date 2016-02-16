@@ -4,12 +4,15 @@ import {NgFor} from 'angular2/common';
 import {Store} from '../../store/Store';
 import {RootActionCreator} from '../../store/actions/root.actions';
 import {Router} from 'angular2/router';
+import {NgIf} from 'angular2/common';
+import {NotitieState} from '../../store/reducers/root.reducer';
 
 @Component({
     selector: 'note-list',
     template: `
         <div class="notes">
-            <div *ngFor="#note of notes; #index = index" class="note">
+            <div *ngIf="state.loading"><img src="img/loading.gif"></div>
+            <div *ngFor="#note of state.notes; #index = index" class="note">
                 <span (click)="select(note)">{{note.tekst}}</span>
                 <button (click)="deleteNote(note, index)">X</button>
             </div>
@@ -29,16 +32,16 @@ import {Router} from 'angular2/router';
             float: right;
         }
     `],
-    directives: [NgFor]
+    directives: [NgFor, NgIf]
 })
 export class NoteList {
 
-    notes: Notitie[];
+    state: NotitieState;
 
     constructor(private store: Store, public rootActionCreator: RootActionCreator,
                 private router: Router) {
         store.subscribe(newState => {
-            this.notes = newState.root.get('notitieState').notes;
+            this.state = newState.root.get('notitieState');
         });
         this.store.dispatch(this.rootActionCreator.getNotes());
     }
@@ -48,7 +51,7 @@ export class NoteList {
     }
 
     deleteNote(note: Notitie, index: number) {
-        this.notes.splice(index, 1);
+        this.state.notes.splice(index, 1);
         this.store.dispatch(this.rootActionCreator.deleteNote(note.id));
     }
 

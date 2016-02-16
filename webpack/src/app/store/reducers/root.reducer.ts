@@ -5,6 +5,7 @@ import {v4} from 'uuid';
 import {RootActionType} from '../actions/root.actions';
 
 export class NotitieState {
+    loading: boolean;
     editing: Notitie = new Notitie();
     selected: Notitie;
     notes: Notitie[] = [];
@@ -31,11 +32,17 @@ export function rootReducer(state = initialState, action) {
     //var notitieState = _.clone(state.get('notitieState'));
     var notitieState = state.get('notitieState');
     switch (action.type) {
-        case RootActionType.GET_NOTES:
-            notitieState.notes = _.clone(inMemNotes);
+        case RootActionType.START_LOADING:
+            notitieState.loading = true;
+            break;
+        case RootActionType.FINISH_LOADING:
+            notitieState.loading = false;
+            break;
+        case RootActionType.SET_NOTES:
+            notitieState.notes = _.clone(action.notes);
             break;
         case RootActionType.GET_NOTE:
-            notitieState.note = inMemNotes.find(n =>
+            notitieState.note = notitieState.notes.find(n =>
                 n.id === action.id);
             break;
         case RootActionType.CREATE_NOTE:
