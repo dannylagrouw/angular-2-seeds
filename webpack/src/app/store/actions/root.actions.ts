@@ -5,8 +5,8 @@ import {Http} from 'angular2/http';
 export const enum RootActionType {
     START_LOADING,
     FINISH_LOADING,
-    GET_NOTES,
     SET_NOTES,
+    SET_NOTE,
     GET_NOTE,
     CREATE_NOTE,
     UPDATE_NOTE,
@@ -30,28 +30,18 @@ export class RootActionCreator {
         };
     }
 
-    getNotesA() {
-        return {
-            type: RootActionType.GET_NOTES
-        };
-    }
-
     getNotes() {
         return dispatch => {
-            console.log('getNotesA start');
             dispatch(this.startSlowOperation());
 
-            return this.http.get('notesdata.json')
+            return this.http.get('/note')
                 .subscribe(response => {
-                    setTimeout(() => {
-                        dispatch(this.finishSlowOperation());
-                        if (response.ok) {
-                            console.log('getNotesA ok', response.json());
-                            dispatch(this.setNotes(response.json()['notes']));
-                        } else {
-                            console.log('getNotesA not ok', response);
-                        }
-                    }, 3000);
+                    dispatch(this.finishSlowOperation());
+                    if (response.ok) {
+                        dispatch(this.setNotes(response.json()['notes']));
+                    } else {
+                        console.log('getNotes not ok', response);
+                    }
                 });
         };
     }
@@ -64,16 +54,41 @@ export class RootActionCreator {
     }
 
     getNote(id: string) {
+        return dispatch => {
+            dispatch(this.startSlowOperation());
+
+            return this.http.get('/note/' + id)
+                .subscribe(response => {
+                    dispatch(this.finishSlowOperation());
+                    if (response.ok) {
+                        dispatch(this.setNote(response.json()['note']));
+                    } else {
+                        console.log('getNote not ok', response);
+                    }
+                });
+        };
+    }
+
+    setNote(note: Notitie) {
         return {
-            type: RootActionType.GET_NOTE,
-            id: id
+            type: RootActionType.SET_NOTE,
+            note: note
         };
     }
 
     createNote(text: string) {
-        return {
-            type: RootActionType.CREATE_NOTE,
-            text: text
+        return dispatch => {
+            dispatch(this.startSlowOperation());
+
+            return this.http.post('/note', JSON.stringify({text: text}))
+                .subscribe(response => {
+                    dispatch(this.finishSlowOperation());
+                    if (response.ok) {
+                        dispatch(this.setNote(response.json()['note']));
+                    } else {
+                        console.log('getNote not ok', response);
+                    }
+                });
         };
     }
 
