@@ -44,25 +44,6 @@ export function rootReducer(state = initialState, action) {
         case RootActionType.SET_NOTE:
             notitieState.note = _.clone(action.note);
             break;
-        case RootActionType.CREATE_NOTE:
-            var note = new Notitie(action.text);
-            note.id = v4();
-            inMemNotes.push(note);
-            break;
-        case RootActionType.UPDATE_NOTE:
-            var selected = inMemNotes.find(n =>
-                n.id === action.id);
-            if (selected) {
-                selected.tekst = action.text;
-            }
-            break;
-        case RootActionType.DELETE_NOTE:
-            var index = inMemNotes.findIndex(n =>
-                n.id === action.id);
-            if (index > -1) {
-                inMemNotes.splice(index, 1);
-            }
-            break;
     }
     return state.set('notitieState', notitieState);
 }

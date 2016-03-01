@@ -2,7 +2,7 @@ import {Injectable} from 'angular2/core';
 import {Notitie} from '../../services/NotitieService';
 import {Http} from 'angular2/http';
 
-export const enum RootActionType {
+export enum RootActionType {
     START_LOADING,
     FINISH_LOADING,
     SET_NOTES,
@@ -86,24 +86,41 @@ export class RootActionCreator {
                     if (response.ok) {
                         dispatch(this.setNote(response.json()['note']));
                     } else {
-                        console.log('getNote not ok', response);
+                        console.log('createNote not ok', response);
                     }
                 });
         };
     }
 
     updateNote(id: string, text: string) {
-        return {
-            type: RootActionType.UPDATE_NOTE,
-            id: id,
-            text: text
+        return dispatch => {
+            dispatch(this.startSlowOperation());
+
+            return this.http.put('/note/' + id, JSON.stringify({text: text}))
+                .subscribe(response => {
+                    dispatch(this.finishSlowOperation());
+                    if (response.ok) {
+                        // toast
+                    } else {
+                        console.log('updateNote not ok', response);
+                    }
+                });
         };
     }
 
     deleteNote(id: string) {
-        return {
-            type: RootActionType.DELETE_NOTE,
-            id: id
+        return dispatch => {
+            dispatch(this.startSlowOperation());
+
+            return this.http.delete('/note/' + id)
+                .subscribe(response => {
+                    dispatch(this.finishSlowOperation());
+                    if (response.ok) {
+                        // toast
+                    } else {
+                        console.log('deleteNote not ok', response);
+                    }
+                });
         };
     }
 
